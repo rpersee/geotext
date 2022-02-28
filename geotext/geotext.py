@@ -76,6 +76,8 @@ def build_index():
 
     # parse http://download.geonames.org/export/dump/cities15000.zip
     cities = read_table(get_data_path('cities15000.txt'), usecols=[1, 8])
+    # parse https://www.grid.ac/downloads
+    cities.update(read_table(get_data_path('grid.csv'), sep=',', usecols=[8, 12], skip=1))
 
     # load and apply city patches
     city_patches = read_table(get_data_path('citypatches.txt'))
@@ -104,7 +106,7 @@ class GeoText(object):
     index = build_index()
 
     def __init__(self, text, country=None):
-        city_regex = r"[A-ZÀ-Ú]+[a-zà-ú]+[ \-]?(?:d[a-u].)?(?:[A-ZÀ-Ú]+[a-zà-ú]+)*"
+        city_regex = r"[A-ZÀ-Ú]+[a-zà-ú]+[ \-]?(?:(?:d|s)[a-u][r-s]?.)?(?:[A-ZÀ-Ú]+[a-zà-ú]+)*"
         candidates = re.findall(city_regex, text)
         # Removing white spaces from candidates
         candidates = [candidate.strip() for candidate in candidates]
