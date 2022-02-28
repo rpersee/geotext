@@ -90,3 +90,4 @@ haines	US
 missouri	US
 culver	US
 sandy	US
+paris	FR
